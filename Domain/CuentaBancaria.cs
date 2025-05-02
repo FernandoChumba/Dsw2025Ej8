@@ -2,20 +2,17 @@
 
 public class CuentaBancaria
 {
-    private TipoCuenta _tipo;
-    private string _numero;
-    private decimal _saldo;
-    private Estado _estado;
-    private decimal _tasaDeInteres;
-    private decimal _limiteDeDescubierto;
-    private decimal _comision;
-    private string[] _titulares;
+    public string _numero { get; }
+    public decimal _saldo { get; protected set; }
 
-    public CuentaBancaria(string numero, decimal saldo, TipoCuenta tipo, string[] titulares)
+    public Estado _estado { get; protected set; }
+
+    protected string[] _titulares { get; }
+
+    protected CuentaBancaria(string numero, decimal saldo, string[] titulares)
     {
         _numero = numero;
         _saldo = saldo;
-        _tipo = tipo;
         _estado = Estado.Activa;
         _titulares = titulares;
     }
@@ -80,43 +77,15 @@ public class CuentaBancaria
     }
     #endregion
 
-    public void Depositar(decimal monto)
-    {
-        if (_tipo == TipoCuenta.CajaDeAhorro)
-        {
-            _saldo += monto;
-        }
-        else if (_tipo == TipoCuenta.CuentaCorriente)
-        {
-            monto -= monto * _comision;
-            _saldo += monto;
-        }
-    }
+    public abstract TipoCuenta GetTipo();
 
-    public void Retirar(decimal monto)
-    {
-        if (_tipo == TipoCuenta.CajaDeAhorro)
-        {
-            _saldo -= monto;
-        }
-        else if (_tipo == TipoCuenta.CuentaCorriente)
-        {
-            if (_saldo - monto >= -_limiteDeDescubierto)
-            {
-                _saldo -= monto;
-            }
-            if (_saldo < 0)
-            {
-                _estado = Estado.Suspendida;
-            }
-        }
-    }
+    public abstract void Depositar(decimal monto);
 
-    public void AplicarInteres()
+
+    public abstract void Retirar(decimal monto);
+
+    public virtual void AplicarInteres()
     {
-        if (_tipo == TipoCuenta.CajaDeAhorro)
-        {
-            _saldo += _saldo * _tasaDeInteres;
-        }
+        // Solo la CajaDeAhorro implementa interés
     }
 }
