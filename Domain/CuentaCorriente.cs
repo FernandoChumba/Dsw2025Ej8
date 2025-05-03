@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace Dsw2025Ej8.Domain
 {
-    public class CuentaCorriente
+    public class CuentaCorriente : CuentaBancaria
     {
         private decimal _comision { get; set; }
         public decimal limiteDeDescubierto { get; set; }
@@ -18,6 +19,7 @@ namespace Dsw2025Ej8.Domain
 
 
         }
+
         public override TipoCuenta GetTipo()
         {
             return TipoCuenta.CuentaCorriente;
@@ -62,4 +64,3 @@ namespace Dsw2025Ej8.Domain
 
 }
 
-}

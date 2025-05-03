@@ -1,6 +1,6 @@
 ﻿namespace Dsw2025Ej8.Domain;
 
-public class CuentaBancaria
+public abstract class CuentaBancaria
 {
     public string _numero { get; }
     public decimal _saldo { get; protected set; }
@@ -16,7 +16,6 @@ public class CuentaBancaria
         _estado = Estado.Activa;
         _titulares = titulares;
     }
-
     protected void ValidarOperacion(decimal monto)
     {
         if (_estado != Estado.Activa)
