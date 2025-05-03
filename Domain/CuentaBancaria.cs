@@ -17,4 +17,34 @@ public class CuentaBancaria
         _titulares = titulares;
     }
 
+    protected void ValidarOperacion(decimal monto)
+    {
+        if (_estado != Estado.Activa)
+        {
+            throw new Excepciones.CuentaNoActiva(_estado.ToString());
+        }
+
+        if (monto <= 0)
+        {
+            throw new Excepciones.MontoNoValido();
+        }
+    }
+
+
+
+    public abstract TipoCuenta GetTipo();
+
+    public abstract void Depositar(decimal monto);
+
+
+    public abstract void Retirar(decimal monto);
+
+    public virtual void AplicarInteres()
+    {
+        // Solo la CajaDeAhorro implementa interés
+    }
+    public void Mostrar()
+    {
+        Console.WriteLine($"Cuenta : {_numero} - Saldo:${_saldo}");
+    }
 }
